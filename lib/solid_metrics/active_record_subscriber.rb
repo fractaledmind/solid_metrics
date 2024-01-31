@@ -36,17 +36,24 @@ module SolidMetrics
       def ignore?(event)
         return true if event.payload[:name].nil?
         return true if SolidMetrics.ignoring_queries?
+        return true if event.payload[:cached]
 
         ignorables = IGNORED_QUERIES + SolidMetrics.ignored_queries
         ignorables.any? { |q| q.match?(event.payload[:name]) }
       end
 
       def normalized(event)
+        binds = if event.payload[:type_casted_binds].respond_to?(:call)
+          event.payload[:binds].map { |column, value| ActiveRecord::Base.connection.type_cast(value, column) }
+        else
+          event.payload[:type_casted_binds]
+        end
+
         {
           sql: event.payload[:sql],
-          duration: event.duration,
+          duration_ms: event.duration,
           name: event.payload[:name],
-          binds: event.payload[:type_casted_binds].to_json,
+          binds: binds,
           payload: event.payload.except(:connection, :binds, :sql, :name, :type_casted_binds)
         }
       end
