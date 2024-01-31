@@ -1,0 +1,8 @@
+Description:
+    Installs solid_metrics as a Rails instrumentation subscriber
+
+Example:
+    bin/rails generate solid_metrics:install
+
+    This will perform the following:
+        Installs solid_metrics migrations

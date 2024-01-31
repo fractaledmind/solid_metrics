@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+class CreateSolidMetricsTables < ActiveRecord::Migration<%= migration_version %>
+  def change
+    create_table :solid_metrics_queries do |t|
+      t.text :sql, null: false
+      t.float :duration, null: false
+      t.string :name
+      t.json :binds
+      t.datetime :occurred_at
+      t.json :payload
+    end
+  end
+end

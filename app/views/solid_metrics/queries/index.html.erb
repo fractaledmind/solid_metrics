@@ -1,0 +1,21 @@
+<table class="min-w-full divide-y divide-gray-300">
+  <thead>
+    <tr>
+      <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Query</th>
+      <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">Count</th>
+    </tr>
+  </thead>
+
+  <tbody class="bg-white">
+    <% @queries.each do |sql, count| %>
+      <tr class="even:bg-gray-50 align-top">
+        <td scope="col" class="whitespace-wrap py-4 pl-4 pr-3 font-medium text-gray-900 sm:pl-3">
+          <pre class="whitespace-pre-wrap ml-6 mt-4"><%= sql %></pre>
+        </td>
+        <td scope="col" class="whitespace-nowrap px-3 py-4 pt-7 text-gray-500 text-right">
+          <%= count %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

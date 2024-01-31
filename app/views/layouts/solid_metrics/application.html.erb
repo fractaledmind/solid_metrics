@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Solid Metrics</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= render "layouts/solid_metrics/style" %>
+  </head>
+  <body class="pb-4">
+    <main class="container mx-auto mt-4">
+      <%= content_for?(:content) ? yield(:content) : yield %>
+    </main>
+
+    <div class="fixed top-0 left-0 right-0 text-center py-2">
+      <% if notice.present? %>
+        <p id="notice"
+           class="py-2 px-3 bg-green-50 text-green-500 font-medium rounded-lg inline-block"
+           data-controller="fade">
+          <%= notice %>
+        </p>
+      <% end %>
+
+      <% if alert.present? %>
+        <p id="alert"
+           class="py-2 px-3 bg-red-50 text-red-500 font-medium rounded-lg inline-block"
+           data-controller="fade">
+          <%= alert %>
+        </p>
+      <% end %>
+    </div>
+
+    <script nonce="<%= content_security_policy_nonce %>">
+      function fadeOut(element) {
+        element.classList.add('transition-opacity')
+        setTimeout(
+          () => {
+            element.classList.add('opacity-0')
+            element.remove()
+          },
+          2000
+        )
+      }
+      document.querySelectorAll('[data-controller="fade"]').forEach(element => {
+        fadeOut(element);
+      });
+    </script>
+  </body>
+</html>
