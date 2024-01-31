@@ -3,17 +3,41 @@
     <tr>
       <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Query</th>
       <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">Count</th>
+      <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 whitespace-nowrap">
+        Total time (ms)
+      </th>
+      <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 whitespace-nowrap">
+        <code>p50</code> latency (ms)
+      </th>
+      <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 whitespace-nowrap">
+        <code>p99</code> latency (ms)
+      </th>
     </tr>
   </thead>
 
   <tbody class="bg-white">
-    <% @queries.each do |sql, count| %>
+    <% @queries.each do |query| %>
       <tr class="even:bg-gray-50 align-top">
         <td scope="col" class="whitespace-wrap py-4 pl-4 pr-3 font-medium text-gray-900 sm:pl-3">
-          <pre class="whitespace-pre-wrap ml-6 mt-4"><%= sql %></pre>
+          <pre class="whitespace-pre-wrap"><%= query.sql %></pre>
         </td>
-        <td scope="col" class="whitespace-nowrap px-3 py-4 pt-7 text-gray-500 text-right">
-          <%= count %>
+        <td scope="col" class="whitespace-nowrap px-3 py-4 text-gray-500 text-right">
+          <%= query.count %>
+        </td>
+        <td scope="col" class="whitespace-nowrap px-3 py-4 text-gray-500 text-right">
+          <abbr title="<%= query.total_ms %> milliseconds" class="cursor-help">
+            <%= query.total_ms.round(1) %>
+          </abbr>
+        </td>
+        <td scope="col" class="whitespace-nowrap px-3 py-4 text-gray-500 text-right">
+          <abbr title="<%= query.p50_ms %> milliseconds" class="cursor-help">
+            <%= query.p50_ms.round(1) %>
+          </abbr>
+        </td>
+        <td scope="col" class="whitespace-nowrap px-3 py-4 text-gray-500 text-right">
+          <abbr title="<%= query.p99_ms %> milliseconds" class="cursor-help">
+            <%= query.p99_ms.round(1) %>
+          </abbr>
         </td>
       </tr>
     <% end %>

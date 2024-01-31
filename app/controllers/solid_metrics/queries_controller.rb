@@ -2,7 +2,7 @@ module SolidMetrics
   class QueriesController < ApplicationController
     # GET /queries
     def index
-      @queries = Query.group(:name).order(count_all: :desc).count
+      @queries = QueryAggregate.order(total_ms: :desc).limit(100)
     end
 
     # GET /queries/1
