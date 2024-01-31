@@ -2,13 +2,13 @@
 
 class CreateSolidMetricsTables < ActiveRecord::Migration<%= migration_version %>
   def change
-    create_table :solid_metrics_queries do |t|
-      t.text :sql, null: false
-      t.float :duration, null: false
+    create_table :solid_metrics_query_aggregates do |t|
+      t.text :sql, null: false, index: { unique: true }
+      t.integer :count, null: false
+      t.float :total_ms, null: false
+      t.float :p50_ms, null: false
+      t.float :p99_ms, null: false
       t.string :name
-      t.json :binds
-      t.datetime :occurred_at
-      t.json :payload
     end
   end
 end
