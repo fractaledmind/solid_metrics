@@ -19,6 +19,7 @@
     <% @queries.each do |query| %>
       <tr class="even:bg-gray-50 align-top">
         <td scope="col" class="whitespace-wrap py-4 pl-4 pr-3 font-medium text-gray-900 sm:pl-3">
+          <span><%= query.name %></span>
           <pre class="whitespace-pre-wrap"><%= query.sql %></pre>
         </td>
         <td scope="col" class="whitespace-nowrap px-3 py-4 text-gray-500 text-right">
@@ -31,12 +32,12 @@
         </td>
         <td scope="col" class="whitespace-nowrap px-3 py-4 text-gray-500 text-right">
           <abbr title="<%= query.p50_ms %> milliseconds" class="cursor-help">
-            <%= query.p50_ms.round(1) %>
+            <%= query.p50_ms.round(4) %>
           </abbr>
         </td>
         <td scope="col" class="whitespace-nowrap px-3 py-4 text-gray-500 text-right">
           <abbr title="<%= query.p99_ms %> milliseconds" class="cursor-help">
-            <%= query.p99_ms.round(1) %>
+            <%= query.p99_ms.round(4) %>
           </abbr>
         </td>
       </tr>

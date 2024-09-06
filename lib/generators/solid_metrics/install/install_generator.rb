@@ -23,6 +23,10 @@ module SolidMetrics
       migration_template "create_solid_metrics_tables.rb.erb", File.join(db_migrate_path, "create_solid_metrics_tables.rb")
     end
 
+    def add_route
+      route "mount SolidMetrics::Engine => \"/metrics\""
+    end
+
     private
 
     def migration_version

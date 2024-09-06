@@ -1,17 +1,20 @@
 module SolidMetrics
-  # Patch `ActiveSupport::Subscriber` to setup monotonic subscriptions.
+  # Patch `ActiveSupport::Subscriber`
   class Subscriber < ActiveSupport::Subscriber
-    private
+    class << self
+      private
 
-      def add_event_subscriber(event) # :doc:
-        return if invalid_event?(event)
+        # Patch `ActiveSupport::Subscriber#add_event_subscriber` to setup monotonic subscriptions.
+        def add_event_subscriber(event) # :doc:
+          return if invalid_event?(event)
 
-        pattern = prepare_pattern(event)
+          pattern = prepare_pattern(event)
 
-        # Don't add multiple subscribers (e.g. if methods are redefined).
-        return if pattern_subscribed?(pattern)
+          # Don't add multiple subscribers (e.g. if methods are redefined).
+          return if pattern_subscribed?(pattern)
 
-        subscriber.patterns[pattern] = notifier.subscribe(pattern, subscriber, monotonic: true)
-      end
+          subscriber.patterns[pattern] = notifier.monotonic_subscribe(pattern, subscriber)
+        end
+    end
   end
 end

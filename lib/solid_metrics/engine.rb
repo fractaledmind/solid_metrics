@@ -12,9 +12,16 @@ module SolidMetrics
       end
     end
 
-    initializer "solid_metrics.active_support.notification_subscriber" do
-      require "solid_metrics/active_record_subscriber"
-      # require "solid_metrics/action_controller_subscriber"
+    initializer "solid_metrics.active_record_subscriber" do
+      ActiveSupport.on_load :active_record do
+        require "solid_metrics/active_record_subscriber"
+      end
+    end
+
+    initializer "solid_metrics.action_controller_subscriber" do
+      ActiveSupport.on_load :action_controller_base do
+        require "solid_metrics/action_controller_subscriber"
+      end
     end
   end
 end
